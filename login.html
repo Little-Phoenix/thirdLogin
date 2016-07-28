@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>登录页面</title>
+    <style media="screen">
+      body, html{
+        margin: 0;
+        padding: 0;
+      }
+      .OAuthDiv img{
+          display: block;
+          margin: 0 auto;
+      }
+      .loginButton{
+        margin: 0 auto;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .loginDiv{
+        transition: all 0.8s ease;
+        -webkit-transition: all 0.8s ease;
+        -moz-transition: all 0.8s ease;
+        -o-transition: all 0.8s;
+        height: 0px;
+        overflow: auto;
+        position: relative;
+      }
+
+      .title{
+        padding-left: 43px;
+      }
+
+      .showDiv{
+        height: 700px;
+      }
+
+      ul{
+        list-style: none;
+      }
+      li{
+        height: 30px;
+        border: 1px solid #808080;
+        width: 450px;
+        margin-bottom: 20px;
+        padding-left: 20px;
+        line-height: 30px;
+        border-radius: 4px;
+        box-shadow: 1px 1px 2px rgba(0,0,0,0.4)
+      }
+      li.hasNext::after{
+        content: '';
+        display: block;
+        width: 0px;
+        border-top: 15px solid #808080;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        margin-top: 3px;
+      }
+
+      li:hover, LI:FOCUS, .SELECTED{
+          box-shadow: -1px -1px 1px rgba(0,0,0,0.4);
+          background-color: lightgray;
+          outline: NONE;
+      }
+
+      .stepDiv{
+        width: 0px;
+        padding: 10px;
+        text-indent: 30px;
+        border: 1px solid #808080;
+        border-radius: 4px;
+        position: absolute;
+        top: 35px;
+        left: 550px;
+        transition: all 0.8s ease;
+        visibility: hidden;
+        overflow: hidden;
+        height: 0;
+        background-color: #fff;
+      }
+    
+    .addWidth{
+        width: 500px;
+        visibility: visible;
+        height: auto;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="OAuthDiv">
+        <img src='imgs/oauth2.0.png'/>
+    </div>
+    <div class='loginButton'>
+      <a href="javascript:void(0)" > <img src='imgs/qq.png' onclick='thirdLogin("qq")'/></a>
+      <a href="javascript:void(0)" > <img src='imgs/wx.png' onclick='thirdLogin("wx")'/></a>
+      <a href="javascript:void(0)" > <img src='imgs/wb.png'onClick='thirdLogin("wb")'/></a>
+    </div>
+    <div class="qq loginDiv showDiv" id='loginWithQQ'>
+        <span class='title'>qq登录-网站接入方式</span>
+        <ul>
+          <li class='step hasNext' onclick="showStep('qq',0)">Step1: 申请接入，获取appid和appkey</li>
+          <li class='step hasNext' onclick="showStep('qq',1)">Step2: 开发应用，并设置协作者帐号进行测试联调</li>
+          <li class='step hasNext' onclick="showStep('qq',2)">Step3: 放置QQ登录按钮</li>
+          <li class='step hasNext' onclick="showStep('qq',3)">Step4: 通过用户登录验证和授权，获取Access Token</li>
+          <li class='step hasNext' onclick="showStep('qq',4)">Step5: 通过Access Token获取用户的OpenID</li>
+          <li class='step' onclick="showStep('qq',5)">Step6: 调用OpenAPI，来请求访问或修改用户授权的资源</li>
+        </ul>
+        <div class="stepDiv">
+          填写网站相关信息，获取appid和appkey
+          <br>
+          网站内容以及网站向QQ空间同步的内容必须满足：
+          <br>
+          1. 符合国家法律法规以及道德标准，传播内容健康向上，能给用户以正确的价值观引导；
+          <br>
+          2. 无色情、反动、暴力等违反中华人民共和国任何法律法规的内容；
+          <br>
+          3. 不准含有腾讯虚拟物品或衍生产品交易的内容、不准含有模仿腾讯中奖信息等钓鱼网站惯用的诈骗信息。
+          <br>
+          涉及腾讯相关产品的虚拟物品交易信息网站主要有：发布大量QQ号和游戏账号买卖、刷钻、刷Q币、盗号、出售以及制作本公司业务外挂、 制作本公司衍生产品（如QQ空间模版、日志模版等），以公司名义发布假中奖信息等。
+        </div>
+        <div class="stepDiv">
+            
+        </div>
+        <div class="stepDiv">
+            
+        </div>
+        <div class="stepDiv">
+            
+        </div>
+        <div class="stepDiv">
+            
+        </div>
+        <div class="stepDiv">
+            
+        </div>
+        
+    </div>
+    <div class="loginDiv" id='loginWithWX'>
+      <span class='title'>微信登录-网站接入方式</span>
+    </div>
+    <div class="wx loginDiv" id='loginWithWB'>
+      <span class='title'>微博登录-网站接入方式</span>
+      <ul>
+          <li class='step hasNext' onclick="showStep('wx',0)">Step1: 创建网站应用</li>
+          <li class='step hasNext' onclick="showStep('wx',1)">Step2: 开发应用，并设置协作者帐号进行测试联调</li>
+          <li class='step' onclick="showStep('wx',2)">Step3: 网站接入审核</li>
+      </ul>
+      <div class="stepDiv">
+          创建网站应用以获取appid和appsecret
+      </div>
+      <div class="stepDiv">
+          
+      </div>
+      <div class="stepDiv">
+          微连接主要审核点：
+          <br>
+          • 1、网站可正常访问：若页面无法打开，或加载时间过长，或未建设完成的网站、或空白网站将无法通过审核；
+          <br>
+          • 2、站点已部署微连接产品：微博登录或社会化组件，组件在页面上体现且组件正常显示；
+          <br>
+          • 3、微博登录使用Oauth 2.0的授权方式；
+          <br>
+          • 4、正确上传网站图标，无网站图标或图标不清晰，将无法通过审核；
+          <br>
+          • 5、网站具有ICP备案号，未提供或提供与页面不一致的ICP备案号将不能通过审核，境外网站需提交相应证明材料；
+      </div>
+      <div class="stepDiv">
+          
+      </div>
+      <div class="stepDiv">
+          
+      </div>
+      <div class="stepDiv">
+          
+      </div>
+    </div>
+    <script type="text/javascript">
+      function thirdLogin(rs){
+        
+        
+        var divs = document.getElementsByClassName('loginDiv');
+        for(var i=0; i<divs.length; i++){
+            if(divs[i].className.indexOf('showDiv') >= 0){
+                removeClass(divs[i], 'showDiv')
+            }
+        }
+        
+        var loginDiv = null;
+        switch (rs) {
+          case 'qq':
+            loginDiv = document.getElementById('loginWithQQ');
+            break;
+          case 'wx':
+            loginDiv = document.getElementById('loginWithWX');
+            break;
+          case 'wb':
+            loginDiv = document.getElementById('loginWithWB');
+            break;
+          default:
+            break;
+        }
+        toggleDiv(loginDiv, 'showDiv')
+      }
+
+      function toggleDiv(div, className){
+        if(div.className.indexOf(className) > 0){
+          removeClass(div, className);
+        }else{
+          addClass(div, className);
+        }
+      }
+
+      function showStep(rs, step){
+        var divs = document.getElementsByClassName(rs)[0].getElementsByClassName('stepDiv');
+        
+        for(var i=0; i<divs.length; i++){
+            if(divs[i].className.indexOf('addWidth')>=0){
+                removeClass(divs[i], 'addWidth');
+            }
+        }
+        
+        var currentDiv = divs[step];
+        toggleDiv(currentDiv, 'addWidth');
+      }
+    
+    function removeClass(_node, className){
+        _node.className = _node.className.replace(className, '')
+        _node.className = _node.className.trim();
+        
+    }
+    
+    function addClass(_node, className){
+        _node.className = _node.className + ' ' + className;
+    }
+    </script>
+  </body>
+</html>
