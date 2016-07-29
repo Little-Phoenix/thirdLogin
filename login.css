@@ -1,0 +1,95 @@
+body, html{
+  margin: 0;
+  padding: 0;
+}
+.OAuthDiv img{
+    display: block;
+    margin: 0 auto;
+}
+.loginButton{
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.loginDiv{
+  transition: all 0.8s ease;
+  -webkit-transition: all 0.8s ease;
+  -moz-transition: all 0.8s ease;
+  -o-transition: all 0.8s;
+  height: 0px;
+  overflow: auto;
+  position: relative;
+}
+
+.title{
+  padding-left: 43px;
+}
+
+.showDiv{
+  height: 700px;
+}
+
+ul{
+  list-style: none;
+}
+li{
+  height: 30px;
+  border: 1px solid #808080;
+  width: 450px;
+  margin-bottom: 20px;
+  padding-left: 20px;
+  line-height: 30px;
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.4)
+}
+li.hasNext::after{
+  content: '';
+  display: block;
+  width: 0px;
+  border-top: 15px solid #808080;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  margin-top: 3px;
+}
+
+li:hover, LI:FOCUS, .selected{
+    box-shadow: -1px -1px 1px rgba(0,0,0,0.4);
+    background-color: lightgray;
+    outline: NONE;
+}
+
+.stepDiv{
+  width: 0px;
+  padding: 10px;
+  text-indent: 30px;
+  border: 1px solid #808080;
+  border-radius: 4px;
+  position: absolute;
+  top: 35px;
+  left: 550px;
+  transition: all 0.8s ease;
+  visibility: hidden;
+  overflow: hidden;
+  height: 0;
+  background-color: #fff;
+}
+
+.stepDiv span{
+  display: block
+}
+
+.addWidth{
+  width: 780px;
+  visibility: visible;
+  height: 500px;
+  overflow-y: auto
+}
+.addWidth img{
+  display: block;
+}
+
+em{
+  color: #ff4747;
+  font-style: normal;
+}

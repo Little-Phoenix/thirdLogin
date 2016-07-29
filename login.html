@@ -3,90 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>登录页面</title>
-    <style media="screen">
-      body, html{
-        margin: 0;
-        padding: 0;
-      }
-      .OAuthDiv img{
-          display: block;
-          margin: 0 auto;
-      }
-      .loginButton{
-        margin: 0 auto;
-        text-align: center;
-        margin-top: 20px;
-      }
-
-      .loginDiv{
-        transition: all 0.8s ease;
-        -webkit-transition: all 0.8s ease;
-        -moz-transition: all 0.8s ease;
-        -o-transition: all 0.8s;
-        height: 0px;
-        overflow: auto;
-        position: relative;
-      }
-
-      .title{
-        padding-left: 43px;
-      }
-
-      .showDiv{
-        height: 700px;
-      }
-
-      ul{
-        list-style: none;
-      }
-      li{
-        height: 30px;
-        border: 1px solid #808080;
-        width: 450px;
-        margin-bottom: 20px;
-        padding-left: 20px;
-        line-height: 30px;
-        border-radius: 4px;
-        box-shadow: 1px 1px 2px rgba(0,0,0,0.4)
-      }
-      li.hasNext::after{
-        content: '';
-        display: block;
-        width: 0px;
-        border-top: 15px solid #808080;
-        border-left: 15px solid transparent;
-        border-right: 15px solid transparent;
-        margin-top: 3px;
-      }
-
-      li:hover, LI:FOCUS, .SELECTED{
-          box-shadow: -1px -1px 1px rgba(0,0,0,0.4);
-          background-color: lightgray;
-          outline: NONE;
-      }
-
-      .stepDiv{
-        width: 0px;
-        padding: 10px;
-        text-indent: 30px;
-        border: 1px solid #808080;
-        border-radius: 4px;
-        position: absolute;
-        top: 35px;
-        left: 550px;
-        transition: all 0.8s ease;
-        visibility: hidden;
-        overflow: hidden;
-        height: 0;
-        background-color: #fff;
-      }
-    
-    .addWidth{
-        width: 500px;
-        visibility: visible;
-        height: auto;
-    }
-    </style>
+    <link rel="stylesheet" href="login.css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
     <div class="OAuthDiv">
@@ -103,9 +20,10 @@
           <li class='step hasNext' onclick="showStep('qq',0)">Step1: 申请接入，获取appid和appkey</li>
           <li class='step hasNext' onclick="showStep('qq',1)">Step2: 开发应用，并设置协作者帐号进行测试联调</li>
           <li class='step hasNext' onclick="showStep('qq',2)">Step3: 放置QQ登录按钮</li>
-          <li class='step hasNext' onclick="showStep('qq',3)">Step4: 通过用户登录验证和授权，获取Access Token</li>
-          <li class='step hasNext' onclick="showStep('qq',4)">Step5: 通过Access Token获取用户的OpenID</li>
-          <li class='step' onclick="showStep('qq',5)">Step6: 调用OpenAPI，来请求访问或修改用户授权的资源</li>
+          <li class='step hasNext' onclick="showStep('qq',3)">Step4: 获取Access Token <em>（授权码模式）</em></li>
+          <li class='step hasNext' onclick="showStep('qq',4)">Step4: 获取Access Token <em>（简化模式）</em></li>
+          <li class='step hasNext' onclick="showStep('qq',5)">Step5: 通过Access Token获取用户的OpenID</li>
+          <li class='step' onclick="showStep('qq',6)">Step6: 调用OpenAPI，来请求访问或修改用户授权的资源</li>
         </ul>
         <div class="stepDiv">
           填写网站相关信息，获取appid和appkey
@@ -121,119 +39,148 @@
           涉及腾讯相关产品的虚拟物品交易信息网站主要有：发布大量QQ号和游戏账号买卖、刷钻、刷Q币、盗号、出售以及制作本公司业务外挂、 制作本公司衍生产品（如QQ空间模版、日志模版等），以公司名义发布假中奖信息等。
         </div>
         <div class="stepDiv">
-            
+          <img src="imgs/qq-test.jpg" alt="" />
         </div>
         <div class="stepDiv">
-            
+          “QQ登录”按钮放置的位置必须易于用户查找，即在网站界面上可以很容易找到“QQ登录”标识。
         </div>
         <div class="stepDiv">
-            
+          <img src="imgs/sqmms.png" alt="" />
+          <h3>1. 用户访问客户端，后者将前者导向认证服务器：</h3>
+          <h4>页面导向：<em>https://graph.qq.com/oauth2.0/authorize</em></h4>
+          <span>
+            参数:
+          </span>
+          <span>
+            response_type:<em>code</em>
+          </span>
+          <span>
+            client_id:<em>第三方应用的appID</em>
+          </span>
+          <span>
+            state:当前客户端的当前状态，可以指定任意值，认证服务器会原封不动的返回这个值
+          </span>
+          <span>
+            redirect_uri: 重定向URI
+          </span>
+          <span>
+            scope: 申请的权限范围
+          </span>
+          <h3>2. 用户选择是否给予客户端授权（此处由用户操作）</h3>
+          <h3>3. 假设用户给予授权，认证服务器将用户导向客户端事先制定的“redirect_uri”</h3>
+          <span>code: 授权码，有效期很短，通常为10分钟，客户端只能使用该码一次</span>
+          <span>state: 如果客户端的请求中包含这个参数，认证服务器的回应也必须一模一样包含这个参数</span>
+          <h3>4. 客户端收到授权码，向认证服务器申请令牌。 <em>对用户不可见</em>  </h3>
+          <h4>授权码获取：<em>https://graph.qq.com/oauth2.0/token</em> </h4>
+          <span>参数:</span>
+          <span> <em>grant_type: authorization_code</em> </span>
+          <span> <em>client_id</em> </span>
+          <span> <em>client_secret</em> </span>
+          <span> <em>code</em> </span>
+          <span> <em>redirect_uri</em> </span>
+          <h3>认证服务器核对授权码和redirect_uri，确认后，向客户端发送访问令牌和更新令牌</h3>
+          <span>返回值</span>
+          <span><em>access_token</em></span>
+          <span><em>refresh_token</em></span>
+          <span><em>expires_in</em></span>
         </div>
         <div class="stepDiv">
-            
+          <img src="imgs/jhms.png" alt="" />
+          <h3>1. 客户端将用户导向认证服务器</h3>
+          <h4>页面导向： <em>https://graph.qq.com/oauth2.0/authorize</em> </h4>
+          <span>参数：</span>
+          <span>
+            response_type:<em>token</em>
+          </span>
+          <span>
+            client_id:<em>第三方应用的appID</em>
+          </span>
+          <span>
+            redirect_uri: 重定向URI
+          </span>
+          <span>
+            scope: 申请的权限范围
+          </span>
+          <span>
+            state:当前客户端的当前状态，可以指定任意值，认证服务器会原封不动的返回这个值
+          </span>
+          <h3>2. 用户决定是否给予客户端授权</h3>
+          <h3>3. 假设用户给予授权，认证服务器将用户导向客户端事先制定的“redirect_uri”</h3>
+          <span>重定向，同时在Hash部分带如下参数：</span>
+          <span>access_token</span>
+          <span>expires_in</span>
+          <span>通过window.location.hash读取#</span>
         </div>
         <div class="stepDiv">
-            
+          <img src="imgs/qq-openid.png" alt="" />
         </div>
-        
+        <div class="stepDiv">
+          <img src="imgs/qq-getuserinfo.png" alt="" />
+        </div>
+
     </div>
-    <div class="loginDiv" id='loginWithWX'>
+    <div class="wx loginDiv" id='loginWithWX'>
       <span class='title'>微信登录-网站接入方式</span>
-    </div>
-    <div class="wx loginDiv" id='loginWithWB'>
-      <span class='title'>微博登录-网站接入方式</span>
       <ul>
           <li class='step hasNext' onclick="showStep('wx',0)">Step1: 创建网站应用</li>
-          <li class='step hasNext' onclick="showStep('wx',1)">Step2: 开发应用，并设置协作者帐号进行测试联调</li>
-          <li class='step' onclick="showStep('wx',2)">Step3: 网站接入审核</li>
+          <li class='step hasNext' onclick="showStep('wx',1)">Step2: 提交审核</li>
+          <li class='step hasNext' onclick="showStep('wx',2)">Step3: 审核通过上线</li>
+          <li class='step' onclick="showStep('wx',3)">Step4: 应用开发</li>
       </ul>
       <div class="stepDiv">
-          创建网站应用以获取appid和appsecret
+        创建网站应用
       </div>
       <div class="stepDiv">
-          
+        提交审核，该审核比较宽松，不限制内容
       </div>
       <div class="stepDiv">
-          微连接主要审核点：
-          <br>
-          • 1、网站可正常访问：若页面无法打开，或加载时间过长，或未建设完成的网站、或空白网站将无法通过审核；
-          <br>
-          • 2、站点已部署微连接产品：微博登录或社会化组件，组件在页面上体现且组件正常显示；
-          <br>
-          • 3、微博登录使用Oauth 2.0的授权方式；
-          <br>
-          • 4、正确上传网站图标，无网站图标或图标不清晰，将无法通过审核；
-          <br>
-          • 5、网站具有ICP备案号，未提供或提供与页面不一致的ICP备案号将不能通过审核，境外网站需提交相应证明材料；
+        审核通过可以获取AppID、AppSecret，至此可以进行微信登录等功能的开发
       </div>
       <div class="stepDiv">
-          
-      </div>
-      <div class="stepDiv">
-          
-      </div>
-      <div class="stepDiv">
-          
+        <img src="imgs/wx1.png" alt="" />
+        <img src="imgs/wx2.png" alt="" />
+        <img src="imgs/wx3.png" alt="" />
+        <img src="imgs/wx4.png" alt="" />
       </div>
     </div>
-    <script type="text/javascript">
-      function thirdLogin(rs){
-        
-        
-        var divs = document.getElementsByClassName('loginDiv');
-        for(var i=0; i<divs.length; i++){
-            if(divs[i].className.indexOf('showDiv') >= 0){
-                removeClass(divs[i], 'showDiv')
-            }
-        }
-        
-        var loginDiv = null;
-        switch (rs) {
-          case 'qq':
-            loginDiv = document.getElementById('loginWithQQ');
-            break;
-          case 'wx':
-            loginDiv = document.getElementById('loginWithWX');
-            break;
-          case 'wb':
-            loginDiv = document.getElementById('loginWithWB');
-            break;
-          default:
-            break;
-        }
-        toggleDiv(loginDiv, 'showDiv')
-      }
+    <div class="wb loginDiv" id='loginWithWB'>
+      <span class='title'>微博登录-网站接入方式</span>
+      <ul>
+          <li class='step hasNext' onclick="showStep('wb',0)">Step1: 创建网站应用</li>
+          <li class='step hasNext' onclick="showStep('wb',1)">Step2: 开发应用，并设置协作者帐号进行测试联调</li>
+          <li class='step hasNext' onclick="showStep('wb',2)">Step3: 调试微博登录功能</li>
+          <li class='step' onclick="showStep('wb',3)">Step3: 网站接入审核</li>
 
-      function toggleDiv(div, className){
-        if(div.className.indexOf(className) > 0){
-          removeClass(div, className);
-        }else{
-          addClass(div, className);
-        }
-      }
+      </ul>
+      <div class="stepDiv">
+        <h3>在网站首页需要加入微博验证用的头：&lt;meta property="wb:webmaster" content="40ae36150b2a6197" /&gt;</h3>
+        <h3>如果验证无法通过，则在根目录加入验证文件，此文件在微博验证页面即可获取。</h3>
+        <h3>通过验证后，即可获取项目的appID和appKey</h3>
+      </div>
+      <div class="stepDiv">
+        在网站编辑页面添加写作者帐号，用以调试登录
+      </div>
+      <div class="stepDiv">
+        <h3>oauth2/authorize 请求用户授权码 <em>get</em></h3>
+        <h3>oauth2/access_token 获取授权过的access token <em>post</em></h3>
+        <h3>oauth2/get_token_info 授权信息查询接口 <em>post</em></h3>
+        <span><em>此为OAuth2.0的授权码授权模式</em></span>
+      </div>
+      <div class="stepDiv">
+        微连接主要审核点：
+        <br>
+        • 1、网站可正常访问：若页面无法打开，或加载时间过长，或未建设完成的网站、或空白网站将无法通过审核；
+        <br>
+        • 2、站点已部署微连接产品：微博登录或社会化组件，组件在页面上体现且组件正常显示；
+        <br>
+        • 3、微博登录使用Oauth 2.0的授权方式；
+        <br>
+        • 4、正确上传网站图标，无网站图标或图标不清晰，将无法通过审核；
+        <br>
+        • 5、网站具有ICP备案号，未提供或提供与页面不一致的ICP备案号将不能通过审核，境外网站需提交相应证明材料；
+      </div>
 
-      function showStep(rs, step){
-        var divs = document.getElementsByClassName(rs)[0].getElementsByClassName('stepDiv');
-        
-        for(var i=0; i<divs.length; i++){
-            if(divs[i].className.indexOf('addWidth')>=0){
-                removeClass(divs[i], 'addWidth');
-            }
-        }
-        
-        var currentDiv = divs[step];
-        toggleDiv(currentDiv, 'addWidth');
-      }
-    
-    function removeClass(_node, className){
-        _node.className = _node.className.replace(className, '')
-        _node.className = _node.className.trim();
-        
-    }
-    
-    function addClass(_node, className){
-        _node.className = _node.className + ' ' + className;
-    }
-    </script>
+    </div>
+    <script type="text/javascript" src='login.js'> </script>
   </body>
 </html>
