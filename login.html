@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="login.css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
-    <div class="OAuthDiv">
+    <!--<div class="OAuthDiv">
         <img src='imgs/oauth2.0.png'/>
-    </div>
+    </div>-->
     <div class='loginButton'>
       <a href="javascript:void(0)" > <img src='imgs/qq.png' onclick='thirdLogin("qq")'/></a>
       <a href="javascript:void(0)" > <img src='imgs/wx.png' onclick='thirdLogin("wx")'/></a>
@@ -26,17 +26,12 @@
           <li class='step' onclick="showStep('qq',6)">Step6: 调用OpenAPI，来请求访问或修改用户授权的资源</li>
         </ul>
         <div class="stepDiv">
-          填写网站相关信息，获取appid和appkey
-          <br>
-          网站内容以及网站向QQ空间同步的内容必须满足：
-          <br>
-          1. 符合国家法律法规以及道德标准，传播内容健康向上，能给用户以正确的价值观引导；
-          <br>
-          2. 无色情、反动、暴力等违反中华人民共和国任何法律法规的内容；
-          <br>
-          3. 不准含有腾讯虚拟物品或衍生产品交易的内容、不准含有模仿腾讯中奖信息等钓鱼网站惯用的诈骗信息。
-          <br>
-          涉及腾讯相关产品的虚拟物品交易信息网站主要有：发布大量QQ号和游戏账号买卖、刷钻、刷Q币、盗号、出售以及制作本公司业务外挂、 制作本公司衍生产品（如QQ空间模版、日志模版等），以公司名义发布假中奖信息等。
+          <span>申请时，需要在网站首页中增加如下验证头：&lt;meta property="qc:admins" content="3622506465765611123226375761573" /&gt;</span>
+          <span>网站内容以及网站向QQ空间同步的内容必须满足：</span>
+          <h3>1. 符合国家法律法规以及道德标准，传播内容健康向上，能给用户以正确的价值观引导；</h3>
+          <h3>2. 无色情、反动、暴力等违反中华人民共和国任何法律法规的内容；</h3>
+          <h3>3. 不准含有腾讯虚拟物品或衍生产品交易的内容、不准含有模仿腾讯中奖信息等钓鱼网站惯用的诈骗信息。</h3>
+          
         </div>
         <div class="stepDiv">
           <img src="imgs/qq-test.jpg" alt="" />
